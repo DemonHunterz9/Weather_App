@@ -1,0 +1,138 @@
+Terminal 
+
+npm install -g @angular/cli     # use for install angular 
+
+ 
+
+ng new student			# create project folder 
+
+Select CSS 
+
+ 
+
+node sarve			#  For Run Code 
+
+ 
+
+-------------------------App.component.html ------------------------------------
+
+<h1>{{title}}</h1>  
+
+<div class="form"> 
+
+<label for="">Enter Your Name</label><br> 
+
+<input type="text" #name placeholder="Enter Your Name" name="Name"> <br> 
+
+<label for="">Enter Your Address</label> <br> 
+
+<input type="text" #address placeholder="Enter Your Address" name="Address"> <br>  
+
+<label for="">Enter Your Contact</label><br> 
+
+<input type="text" #contact placeholder="Enter Your Contact" name="Contact"> <br>  
+
+<label for="">Enter Your Email</label><br> 
+
+<input type="email" #email placeholder="Enter Your Email" name="Email"> <br>  
+
+<label for="">Enter Your Password</label><br> 
+
+<input type="password" #password placeholder="Enter Your Password" name="password"> <br>  
+
+<button (click)="getValue(name.value, address.value, contact.value, email.value)">Register</button> 
+
+</div>  
+
+<h1>Your Register Data</h1>  
+
+<p>Name: {{displayname}}</p>  
+
+<p>Address: {{displayaddress}}</p>  
+
+<p>Conatct:{{displaycontact}}</p>  
+
+<p>Email:{{displayemail}}</p> 
+
+
+---------------------------------------app.component.ts----------------------------
+
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.css'
+})
+export class AppComponent {
+  title = 'Registration';
+  
+  displayname=''; 
+  displayaddress=''; 
+  displaycontact=''; 
+  displayemail=''; 
+
+  getValue(name:string, address:string, contact:string, email:string) 
+
+{  this.displayname=name; 
+  this.displayaddress=address; 
+  this.displaycontact=contact; 
+  this.displayemail=email; }
+}
+
+
+-----------------------------------app.component.css---------------------------------
+
+.form {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: left;
+  border: solid black;
+}
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+input {
+  width: 90%;
+  padding: 10px 12px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+button {
+  width: 40%;
+  padding: 12px;
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+button:hover {
+  background-color: #357abd;
+}
+p {
+  margin: 10px 0;
+  font-size: 20px;
+  color: #333;
+  text-align: left;
+  margin-left: 540px;
+}
+
+ 
+
+ 

@@ -1,0 +1,90 @@
+
+STEPS: 
+1) Make new folder: assign03b 
+2) In this folder make a new file: index.js => PASTE CODE 
+3) New terminal: 
+a. Npm init 
+4) OPEN mongodb 
+5) New connection>save connection 
+6) Open MONGOSH(bottom left) 
+7) Show databases 
+8) Use Akshat 
+9) Db.createCollection ('Profile') 
+10) Akshat>db.createCollection('Profile') 
+11) Db.Profile.insertOne({name:'Akshat', email:'akshat@gmail.com', city:'nashik'}) 
+12) NOW IN VS CODE: 
+a. Make new file mongodb.js => PASTE CODE 
+b. Open terminal 
+i. npm i mongodb 
+ii. npm i express 
+iii. node index.js 
+13) GOTO CHROME: TYPE=> localhost:4000 
+14) Copy url 
+15) Paste In postman software: https://localhost:4000/getData
+
+
+
+
+-----------------------------Terminal------------------------- 
+PS C:\Users\Gaurav\Desktop\TE IT\WAD\ass3b> npm init 
+PS C:\Users\Gaurav\Desktop\TE IT\WAD\ass3b> npm i mongodb 
+PS C:\Users\Gaurav\Desktop\TE IT\WAD\ass3b> npm i express 
+PS C:\Users\Gaurav\Desktop\TE IT\WAD\ass3b> node index.js 
+
+
+
+-----------------------------------index.js----------------------------------------
+const express = require("express"); 
+const dbConnect = require("./mongodb"); 
+const app = express(); 
+// Middleware to parse JSON 
+app.use(express.json()); 
+// GET data 
+app.get("/getData", async (req, resp) => { 
+let result = await dbConnect(); 
+result = await result.find().toArray(); 
+resp.send(result); 
+}); 
+// POST (insert) data 
+app.post("/insertData", async (req, resp) => { 
+let result = await dbConnect(); 
+console.log(req.body); 
+result = await result.insertOne(req.body); 
+resp.send("Data inserted Successfully"); 
+}); 
+// PUT (update) data by name 
+app.put("/updateData/:name", async (req, resp) => { 
+let result = await dbConnect(); 
+result = await result.updateOne( 
+{ name: req.params.name }, 
+{ $set: req.body } 
+); 
+resp.send("Data updated successfully"); 
+}); 
+// DELETE data by name 
+app.delete("/deleteData/:name", async (req, resp) => { 
+let result = await dbConnect(); 
+result = await result.deleteOne({ name: req.params.name }); 
+resp.send("Data Deleted Successfully"); 
+}); 
+// Start server 
+app.listen(3000, () => { 
+console.log("Server is running on port 3000"); 
+});
+
+
+
+
+
+---------------------------------------Mongodb.js-------------------------------------------
+
+const {MongoClient} = require('mongodb') 
+const url='mongodb://localhost:27017'; 
+const database = 'student1' 
+const client = new MongoClient(url); 
+const dbConnect = async()=>{ 
+const result= await client.connect(); 
+const db = await result.db(database); 
+return db.collection('profile1'); 
+} 
+module.exports=dbConnect; 

